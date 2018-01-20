@@ -1,0 +1,55 @@
+
+atlas.png
+size: 2048,512
+format: RGBA8888
+filter: Nearest,Nearest
+repeat: none
+bdg
+  rotate: false
+  xy: 2, 30
+  size: 720, 480
+  orig: 720, 480
+  offset: 0, 0
+  index: -1
+clear
+  rotate: false
+  xy: 1110, 411
+  size: 48, 48
+  orig: 48, 48
+  offset: 0, 0
+  index: -1
+house1
+  rotate: false
+  xy: 724, 75
+  size: 155, 145
+  orig: 155, 145
+  offset: 0, 0
+  index: -1
+house3
+  rotate: false
+  xy: 724, 2
+  size: 64, 71
+  orig: 64, 71
+  offset: 0, 0
+  index: -1
+house4
+  rotate: false
+  xy: 881, 140
+  size: 82, 80
+  orig: 82, 80
+  offset: 0, 0
+  index: -1
+road4
+  rotate: false
+  xy: 724, 222
+  size: 384, 288
+  orig: 384, 288
+  offset: 0, 0
+  index: -1
+tree
+  rotate: false
+  xy: 1110, 461
+  size: 128, 49
+  orig: 128, 49
+  offset: 0, 0
+  index: -1

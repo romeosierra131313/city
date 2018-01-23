@@ -6,50 +6,57 @@ filter: Nearest,Nearest
 repeat: none
 bdg
   rotate: false
-  xy: 2, 30
+  xy: 2, 2
   size: 720, 480
   orig: 720, 480
   offset: 0, 0
   index: -1
 clear
   rotate: false
-  xy: 1110, 411
+  xy: 1872, 434
   size: 48, 48
   orig: 48, 48
   offset: 0, 0
   index: -1
 house1
   rotate: false
-  xy: 724, 75
+  xy: 1356, 47
   size: 155, 145
   orig: 155, 145
   offset: 0, 0
   index: -1
 house3
   rotate: false
-  xy: 724, 2
-  size: 64, 71
-  orig: 64, 71
+  xy: 1742, 363
+  size: 61, 68
+  orig: 61, 68
   offset: 0, 0
   index: -1
 house4
   rotate: false
-  xy: 881, 140
-  size: 82, 80
-  orig: 82, 80
+  xy: 1513, 118
+  size: 73, 74
+  orig: 73, 74
   offset: 0, 0
   index: -1
 road4
   rotate: false
-  xy: 724, 222
+  xy: 1356, 194
   size: 384, 288
   orig: 384, 288
   offset: 0, 0
   index: -1
 tree
   rotate: false
-  xy: 1110, 461
+  xy: 1742, 433
   size: 128, 49
   orig: 128, 49
+  offset: 0, 0
+  index: -1
+ts
+  rotate: false
+  xy: 724, 21
+  size: 630, 461
+  orig: 630, 461
   offset: 0, 0
   index: -1

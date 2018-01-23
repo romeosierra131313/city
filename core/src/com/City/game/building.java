@@ -6,7 +6,9 @@
 package com.City.game;
 
 import com.badlogic.gdx.graphics.Texture;
+import com.badlogic.gdx.graphics.g2d.Animation;
 import com.badlogic.gdx.graphics.g2d.Sprite;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 
 /**
  *
@@ -23,6 +25,7 @@ public class building {
     private final int height;
     transient Sprite s;
     transient Sprite s2;
+    transient Animation a;
     String Sprite1Name;
     String Sprite2Name;
     String finished ;
@@ -31,6 +34,8 @@ public class building {
     private final int aoe;
     private  int effect;
     private Boolean isSelected = false;
+    private Boolean isRentRendered = false;
+    private Boolean isConnected = false;
     
    public building(int x, int y,int width,int height, Sprite s,int type,int aoe,int effect){
      this.x = x;
@@ -44,6 +49,21 @@ public class building {
      this.aoe = aoe;
      this.effect = effect;
      rent = baserent;
+     
+   }
+   public building(int x, int y,int width,int height, Animation a,int type,int aoe,int effect){
+     this.x = x;
+     this.y = y;
+     this.width = width;
+     this.height =height;
+    if(s != null){
+     this.a = a;
+     s.setPosition(x, y);}
+     this.type = type;
+     this.aoe = aoe;
+     this.effect = effect;
+     rent = baserent;
+     
    }
 
    
@@ -127,5 +147,17 @@ public class building {
       }
       public Boolean getIsSlected(){
        return isSelected;
+      }
+      public Boolean getisRentRendered(){
+       return isRentRendered;
+      }
+      public void setisRentRendered(Boolean b){
+        isRentRendered = b;
+      }
+      public Boolean getisConnected(){
+       return isConnected;
+      }
+      public void setisisConnected(Boolean b){
+       isConnected = b;
       }
 }

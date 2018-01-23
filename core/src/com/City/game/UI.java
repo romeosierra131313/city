@@ -42,8 +42,10 @@ public class UI {
       transient Label Date;
       transient List buildtypes;
       transient List decotypes;
+      transient List corptypes;
       transient final TextButton build;
       transient final TextButton deco;
+      transient final TextButton corp;
       
     public UI (final City C){
        
@@ -86,17 +88,40 @@ public class UI {
                 Gdx.input.setInputProcessor(stage);
             }
         });
+        corp = new TextButton("Corp", skin, "default");
+        corp.setWidth(100f);
+        corp.setHeight(20f);
+        corp.setPosition(Gdx.graphics.getWidth()/20 + 200f, Gdx.graphics.getHeight()/20 *18);
+        corp.addListener(new ClickListener(){
+            @Override 
+            public void clicked(InputEvent event, float x, float y){
+                corptypes.setSelectedIndex(0);
+                buildScrollpane(corptypes,C);
+                stage.addActor(table);
+                stage.addActor(Date);
+                stage.addActor(GOLD);
+                Gdx.input.setInputProcessor(stage);
+            }
+        });
        
        table = new Table(skin);
-    //   table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
-       table.setFillParent(true);
+      table.setBounds(0, 0, Gdx.graphics.getWidth(), Gdx.graphics.getHeight());
+      // table.setFillParent(true);
        table.setDebug(true);
        buildtypes = new List(skin);
-       buildtypes.setItems(new String[]{"","cancel","small","medium","road"});
+       buildtypes.setItems(new String[]{"","cancel","Wood Shack........900","Small-Flat.......1600","Modern Flat......2500","Modern Flat Delux..2600",
+                                          "Urban Flat....2700","Urban Delux....3200","Artistic Flat....3150","Large House.....4000","Hi Quality Flat....3500",
+                                          "Hi Quality Flat Dlux....4000","Mansion.....6000","2 storey....3775","2 Storey City.....4125","Classic Flat....3200"
+                                         });
        buildtypes.setSelectedIndex(0);
+       
        decotypes = new List(skin);
-       decotypes.setItems(new String[]{"","cancel","tree","tree2","tree3","tree4"});
+       decotypes.setItems(new String[]{"","cancel","road","tree","tree2","tree3","tree4","flower1","flower2","flower3","flower4"});
        decotypes.setSelectedIndex(0);
+       
+       corptypes = new List(skin);
+       corptypes.setItems(new String[]{"","cancel","Small Mart","Large Mart","Mall","Bank","Gym","News Station","ISP","Small Office","large Office"});
+       corptypes.setSelectedIndex(0);
  
        
 
@@ -171,32 +196,45 @@ public void OpenBuildigMenu(OrthographicCamera cam,Vector3 v,final HashMap map,f
       stage.addActor(Destroy);
       
   }
-
-    private void basicMenu() {
+private void basicMenu() {
     stage.clear();
     stage.addActor(GOLD);
     stage.addActor(Date);
     stage.addActor(build);
     stage.addActor(deco);
+    stage.addActor(corp);
     Gdx.input.setInputProcessor(City.multiplexer);
     }
-    private void buildScrollpane(List l,final City C){
+private void buildScrollpane(List l,final City C){
        table.clear();
        sp = new ScrollPane(l,skin);
+       sp.setScrollingDisabled(true, false);
        
        sp.setPosition(Gdx.graphics.getWidth()/20 + build.getWidth(), Gdx.graphics.getHeight()/20 *18);
        if(l == buildtypes){    
        sp.addListener(new ChangeListener() {
            @Override
            public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                
                 if(buildtypes.getSelected() == buildtypes.getItems().get(1)){
                    stage.clear();
                    stage.addActor(build);
                 
                 }                                                //////CANCEL/////
-               if(buildtypes.getSelected() == buildtypes.getItems().get(2)){                                                  //////SMALLHOUSE///
-                 if(C.GetG()>100000){
-                 b =  uf.smallHouse(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+               
+                if(buildtypes.getSelected() == buildtypes.getItems().get(2)){                                                ////////////wood//////////
+                  if(C.GetG()>50000){
+                 b =  uf.House3(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+                }
+               if(buildtypes.getSelected() == buildtypes.getItems().get(3)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>75000){
+                 b =  uf.House4(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
                  C.buildings.add(0, b);
                  C.setisAttached(Boolean.TRUE);
                  C.setisBuildingBuilding(Boolean.TRUE);
@@ -205,27 +243,131 @@ public void OpenBuildigMenu(OrthographicCamera cam,Vector3 v,final HashMap map,f
                }
                 
                }
-                if(buildtypes.getSelected() == buildtypes.getItems().get(3)){                                                 ////////MEDIUM HOUSE/////////
-                 if(C.G>200000){
-                 b = uf.mediumHouse(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                if(buildtypes.getSelected() == buildtypes.getItems().get(4)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>75000){
+                 b =  uf.House5(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
                  C.buildings.add(0, b);
                  C.setisAttached(Boolean.TRUE);
                  C.setisBuildingBuilding(Boolean.TRUE);
-                 }else{
-                 System.out.println("you too poor");}
-                }
-                if(buildtypes.getSelected() == buildtypes.getItems().get(4)){                                                ////////////ROAD//////////
-                 if(C.G>10){
-                 
-                 C.setisRoadSelected(Boolean.TRUE);
-                 
-                 }else{
-                 System.out.println("you too poor");}
-                }
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+                if(buildtypes.getSelected() == buildtypes.getItems().get(5)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>85000){
+                 b =  uf.House6(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+               if(buildtypes.getSelected() == buildtypes.getItems().get(6)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>85000){
+                 b =  uf.House7(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+               if(buildtypes.getSelected() == buildtypes.getItems().get(7)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>125000){
+                 b =  uf.House16(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+               if(buildtypes.getSelected() == buildtypes.getItems().get(8)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100000){
+                 b =  uf.House9(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+               if(buildtypes.getSelected() == buildtypes.getItems().get(9)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>150000){
+                 b =  uf.House10(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+               if(buildtypes.getSelected() == buildtypes.getItems().get(10)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>125000){
+                 b =  uf.House11(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+               if(buildtypes.getSelected() == buildtypes.getItems().get(11)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100000){
+                 b =  uf.House12(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+               if(buildtypes.getSelected() == buildtypes.getItems().get(12)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>250000){
+                 b =  uf.House13(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+               if(buildtypes.getSelected() == buildtypes.getItems().get(13)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>180000){
+                 b =  uf.House14(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+               if(buildtypes.getSelected() == buildtypes.getItems().get(14)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>185000){
+                 b =  uf.House15(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+               if(buildtypes.getSelected() == buildtypes.getItems().get(15)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100000){
+                 b =  uf.House8(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
                
                stage.clear();
                stage.addActor(build);
                stage.addActor(deco);
+               stage.addActor(corp);
                stage.addActor(GOLD);
                stage.addActor(Date);
                Gdx.input.setInputProcessor(C.multiplexer);
@@ -243,16 +385,12 @@ public void OpenBuildigMenu(OrthographicCamera cam,Vector3 v,final HashMap map,f
                 
                 }                                                //////CANCEL/////
                if(decotypes.getSelected() == decotypes.getItems().get(2)){                                                  //////SMALLHOUSE///
-                 if(C.GetG()>100){
-                 b =  uf.tree1(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("t1_1")),1);
-                 b.SetS2( new Sprite(C.atlas.findRegion("t1_2")));
-                 b.s2.setSize(2,2);
-                 C.buildings.add(0, b);
-                 C.setisAttached(Boolean.TRUE);
-                 C.setisBuildingBuilding(Boolean.TRUE);
-               }else{
-               System.out.println("you too poor");
-               }
+                 if(C.G>10){
+                 
+                 C.setisRoadSelected(Boolean.TRUE);
+                 
+                 }else{
+                 System.out.println("you too poor");}
                 
                }
                if(decotypes.getSelected() == decotypes.getItems().get(3)){                                                  //////SMALLHOUSE///
@@ -294,21 +432,184 @@ public void OpenBuildigMenu(OrthographicCamera cam,Vector3 v,final HashMap map,f
                }
                 
                }
-               
-                
+               if(decotypes.getSelected() == decotypes.getItems().get(6)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.tree1(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("t1_1")),1);
+                 b.SetS2( new Sprite(C.atlas.findRegion("t1_2")));
+                 b.s2.setSize(2,2);
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+               if(decotypes.getSelected() == decotypes.getItems().get(7)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.flower2(Gdx.input.getX(), Gdx.input.getY(),1);
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               }
+                if(decotypes.getSelected() == decotypes.getItems().get(8)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.flower3(Gdx.input.getX(), Gdx.input.getY(),1);
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               } if(decotypes.getSelected() == decotypes.getItems().get(9)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.flower4(Gdx.input.getX(), Gdx.input.getY(),1);
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+               }else{
+               System.out.println("you too poor");
+               }
+               } 
                
                stage.clear();
                stage.addActor(build);
                stage.addActor(deco);
+               stage.addActor(corp);
                stage.addActor(GOLD);
                stage.addActor(Date);
                Gdx.input.setInputProcessor(C.multiplexer);
            }
           
        });
-       }
+         } 
+       if(l == corptypes){
+        sp.addListener(new ChangeListener() {
+           @Override
+           public void changed(ChangeListener.ChangeEvent ce, Actor actor) {
+                if(corptypes.getSelected() == corptypes.getItems().get(1)){
+                   stage.clear();
+                   stage.addActor(corp);
+                
+                }                                                //////CANCEL/////
+               if(corptypes.getSelected() == corptypes.getItems().get(2)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.B1(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+                 
+                 }else{
+                 System.out.println("you too poor");
+                 }
+                }
+               if(corptypes.getSelected() == corptypes.getItems().get(3)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.B2(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+                 
+                 }else{
+                 System.out.println("you too poor");
+                 }
+                }
+               if(corptypes.getSelected() == corptypes.getItems().get(4)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.B3(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+                 
+                 }else{
+                 System.out.println("you too poor");
+                 }
+                }
+               if(corptypes.getSelected() == corptypes.getItems().get(5)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.B4(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+                 
+                 }else{
+                 System.out.println("you too poor");
+                 }
+                }
+               if(corptypes.getSelected() == corptypes.getItems().get(6)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.B5(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+                 
+                 }else{
+                 System.out.println("you too poor");
+                 }
+                }
+               if(corptypes.getSelected() == corptypes.getItems().get(7)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.B6(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+                 
+                 }else{
+                 System.out.println("you too poor");
+                 }
+                }
+               if(corptypes.getSelected() == corptypes.getItems().get(8)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.B7(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+                 
+                 }else{
+                 System.out.println("you too poor");
+                 }
+                }
+               if(corptypes.getSelected() == corptypes.getItems().get(9)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.B8(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+                 
+                 }else{
+                 System.out.println("you too poor");
+                 }
+                }
+               if(corptypes.getSelected() == corptypes.getItems().get(10)){                                                  //////SMALLHOUSE///
+                 if(C.GetG()>100){
+                 b =  uf.B9(Gdx.input.getX(), Gdx.input.getY(), new Sprite(C.atlas.findRegion("clear")));
+                 C.buildings.add(0, b);
+                 C.setisAttached(Boolean.TRUE);
+                 C.setisBuildingBuilding(Boolean.TRUE);
+                 
+                 }else{
+                 System.out.println("you too poor");
+                 }
+                }
+               
+               stage.clear();
+               stage.addActor(build);
+               stage.addActor(deco);
+               stage.addActor(corp);
+               stage.addActor(GOLD);
+               stage.addActor(Date);
+               Gdx.input.setInputProcessor(C.multiplexer);
+           }
+          
+       });
+         } 
        
+       sp.setFlickScroll(true);
+       sp.layout();
+       sp.setFadeScrollBars(false);
+       sp.getMaxY(); 
        table.add(sp).width(200).height(300);
-    
-    } 
+}
 }

@@ -25,7 +25,7 @@ public class Calendar  {
     this.C = C;
     }
     public void SecondsInc(ArrayList<building> buildings){
-      if(seconds < 2){
+      if(seconds < 60){
        seconds ++;
        }
        if(seconds ==2){
@@ -35,7 +35,20 @@ public class Calendar  {
     }
 
     private void DayInc(ArrayList<building> buildings) {
-      if(days < 3){
+      if(days < 30){
+          for(int i = 1 ; i < buildings.size();i++){
+        if(buildings.get(i).getage() > buildings.get(i).getMaturity() ){
+            if(buildings.get(i).getType() == 6){
+              if(buildings.get(i).getisConnected()){  
+         buildings.get(i).setrent(C.effects.get(new Vector2(buildings.get(i).x,buildings.get(i).y)));
+         C.IncG(buildings.get(i).GetRent());
+         buildings.get(i).setisRentRendered(Boolean.TRUE);
+              }
+           }
+        }
+         C.setRenderingPay(Boolean.TRUE);
+       }
+          
        days ++;
        }
        if(days ==3){
@@ -48,10 +61,13 @@ public class Calendar  {
      if(month < 12){
        month ++;
        for(int i = 1 ; i < buildings.size();i++){
-        if(buildings.get(i).getage() > 2){
-            if(buildings.get(i).getType() != 5){
+        if(buildings.get(i).getage() > buildings.get(i).getMaturity() ){
+            if(buildings.get(i).getType() == 2){
+                if(buildings.get(i).getisConnected()){
          buildings.get(i).setrent(C.effects.get(new Vector2(buildings.get(i).x,buildings.get(i).y)));
          C.IncG(buildings.get(i).GetRent());
+         buildings.get(i).setisRentRendered(Boolean.TRUE);
+                }
             }
         }
          C.AgeBuildings(buildings.get(i));
